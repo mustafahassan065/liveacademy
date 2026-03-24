@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Academy* | Real-Time Mentorship & High-Ticket Execution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Montserrat', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        studioBlack: '#020202',
+                        studioDark: '#080808',
+                        studioGray: '#121212',
+                        studioBorder: '#222222',
+                        liveRed: '#FA1111',
+                        liveRedDark: '#8A0000',
+                        textMuted: '#777777',
+                        textBright: '#F0F0F0',
+                    },
+                    backgroundImage: {
+                        'noise-texture': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E\")",
+                        'studio-gradient': 'linear-gradient(180deg, rgba(2,2,2,0) 0%, #020202 100%)',
+                        'red-flare': 'radial-gradient(circle at 50% 0%, rgba(250, 17, 17, 0.12) 0%, rgba(2, 2, 2, 0) 65%)',
+                        'grid-pattern': 'linear-gradient(to right, #121212 1px, transparent 1px), linear-gradient(to bottom, #121212 1px, transparent 1px)',
+                    },
+                    boxShadow: {
+                        'red-glow': '0 0 30px rgba(250, 17, 17, 0.25)',
+                        'red-glow-intense': '0 0 50px rgba(250, 17, 17, 0.4)',
+                        'card-depth': '0 20px 50px -10px rgba(0,0,0,0.9)',
+                    },
+                    animation: {
+                        'pulse-live': 'pulseLive 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'timecode': 'timecode 1s infinite',
+                        'scanline': 'scanline 6s linear infinite',
+                    },
+                    keyframes: {
+                        pulseLive: {
+                            '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                            '50%': { opacity: 0.4, transform: 'scale(0.9)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: 0, transform: 'translateY(60px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 },
+                        },
+                        timecode: {
+                            '0%': { opacity: 1 },
+                            '50%': { opacity: 0 },
+                            '100%': { opacity: 1 },
+                        },
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #020202; color: #F0F0F0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        
+        /* Studio Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020202; border-left: 1px solid #121212; }
+        ::-webkit-scrollbar-thumb { background: #222222; }
+        ::-webkit-scrollbar-thumb:hover { background: #FA1111; }
+
+        /* Scroll Reveal Intersections */
+        .reveal-node { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+        .reveal-node.is-active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Cinematic Buttons */
+        .btn-cinematic { position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; border: 1px solid #FA1111; }
+        .btn-cinematic::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: #FA1111; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: -1; }
+        .btn-cinematic:hover::before { left: 0; }
+        .btn-cinematic:hover { box-shadow: 0 0 40px rgba(250, 17, 17, 0.3); transform: translateY(-2px); }
+
+        /* Mobile Menu Overlay - Studio Curtains Effect */
+        #mobile-menu { opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1); }
+        #mobile-menu.open { opacity: 1; visibility: visible; }
+        .menu-backdrop { position: absolute; inset: 0; background: rgba(2, 2, 2, 0.98); backdrop-filter: blur(24px); transform: translateY(-100%); transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1); }
+        #mobile-menu.open .menu-backdrop { transform: translateY(0); }
+        .menu-link-wrapper { transform: translateY(40px); opacity: 0; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        #mobile-menu.open .menu-link-wrapper { transform: translateY(0); opacity: 1; }
+
+        /* Hamburger Animation */
+        .ham-trigger { width: 50px; height: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 7px; cursor: pointer; z-index: 100; background: #080808; border: 1px solid #222222; transition: all 0.3s ease; }
+        .ham-trigger:hover { border-color: #FA1111; }
+        .ham-line { width: 24px; height: 2px; background-color: #F0F0F0; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .ham-active .line-1 { transform: translateY(9px) rotate(45deg); background-color: #FA1111; }
+        .ham-active .line-2 { opacity: 0; transform: scaleX(0); }
+        .ham-active .line-3 { transform: translateY(-9px) rotate(-45deg); background-color: #FA1111; }
+
+        /* Accordion System */
+        .faq-drawer { max-height: 0; overflow: hidden; transition: max-height 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease; opacity: 0; }
+        .faq-block.is-open .faq-drawer { max-height: 800px; opacity: 1; }
+        .faq-icon { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .faq-block.is-open .faq-icon { transform: rotate(180deg); color: #FA1111; }
+
+        /* Table and Border Utilities */
+        .cinematic-border { position: relative; }
+        .cinematic-border::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0%; height: 1px; background: #FA1111; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .cinematic-border:hover::after { width: 100%; }
+        
+        .studio-card { background: #080808; border: 1px solid #121212; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .studio-card:hover { border-color: #333333; transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.95); }
+
+        /* Audio Visualizer Bars */
+        .audio-bar { width: 12px; background-color: #FA1111; border-radius: 2px 2px 0 0; transition: height 0.1s ease; box-shadow: 0 0 15px rgba(250, 17, 17, 0.5); }
+    </style>
+</head>
+<body class="selection:bg-liveRed selection:text-white relative">
+
+    <div class="fixed inset-0 bg-noise-texture pointer-events-none z-[100] opacity-60"></div>
+    <div class="fixed top-0 left-0 w-full h-[150vh] bg-red-flare pointer-events-none z-[-1]"></div>
+
+    <div class="w-full bg-[#020202] border-b border-studioBorder py-3 relative z-50 overflow-hidden">
+        <div class="flex items-center justify-between max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-5">
+                <span class="flex items-center gap-2 px-3 py-1 bg-liveRed/10 border border-liveRed/50 rounded text-[10px] font-mono text-liveRed uppercase tracking-widest font-bold shadow-red-glow">
+                    <span class="w-2 h-2 bg-liveRed rounded-full animate-pulse-live"></span>
+                    Transmission Live
+                </span>
+                <span class="hidden md:block font-mono text-[10px] text-textMuted uppercase tracking-widest">
+                    Next Broadcast: <span class="text-textBright font-bold">Offer Creation & Pricing Matrix</span>
+                </span>
+            </div>
+            <div class="flex items-center gap-8 font-mono text-[10px] text-textMuted uppercase tracking-widest">
+                <span class="hidden sm:flex items-center gap-2">Status: <span class="text-green-500 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> Secured</span></span>
+                <span id="live-timecode" class="text-liveRed font-bold">REC [00:00:00:00]</span>
+            </div>
+        </div>
+    </div>
+
+    <nav id="navbar" class="fixed w-full top-[50px] z-40 transition-all duration-500 py-6 border-b border-transparent">
+        <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            
+            <a href="#" class="flex items-center gap-4 group z-50">
+                <div class="relative w-10 h-10 flex items-center justify-center">
+                    <div class="absolute inset-0 border-2 border-liveRed rounded-full scale-110 group-hover:scale-125 transition-transform duration-700 opacity-40"></div>
+                    <div class="absolute inset-0 border border-liveRed rounded-full scale-150 opacity-10 group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="w-4 h-4 bg-liveRed rounded-full group-hover:animate-pulse-live shadow-[0_0_20px_#FA1111]"></div>
+                </div>
+                <span class="font-display font-black text-2xl md:text-3xl tracking-tighter text-textBright uppercase">Live Academy<span class="text-liveRed">*</span></span>
+            </a>
+
+            <div class="hidden xl:flex items-center space-x-12">
+                <a href="#manifesto" class="font-mono text-[11px] font-bold text-textMuted hover:text-textBright uppercase tracking-[0.2em] cinematic-border pb-1.5 transition-colors">The Paradigm</a>
+                <a href="#curriculum" class="font-mono text-[11px] font-bold text-textMuted hover:text-textBright uppercase tracking-[0.2em] cinematic-border pb-1.5 transition-colors">Syllabus</a>
+                <a href="#schedule" class="font-mono text-[11px] font-bold text-textMuted hover:text-textBright uppercase tracking-[0.2em] cinematic-border pb-1.5 transition-colors">Schedule</a>
+                <a href="#proof" class="font-mono text-[11px] font-bold text-textMuted hover:text-textBright uppercase tracking-[0.2em] cinematic-border pb-1.5 transition-colors">Case Studies</a>
+                
+                <div class="h-6 w-px bg-studioBorder"></div>
+                
+                <a href="#affiliate" class="font-mono text-[11px] font-bold text-liveRed hover:text-white uppercase tracking-[0.2em] transition-colors flex items-center gap-2 bg-liveRed/5 px-4 py-2 rounded border border-liveRed/20">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Partner (20%)
+                </a>
+
+                <a href="https://whop.com/liveacademy/liveacademy?a=digitalartlab" class="btn-cinematic px-8 py-3.5 text-textBright font-display font-black text-[11px] uppercase tracking-[0.2em] flex items-center gap-3 bg-studioDark">
+                    <span class="w-2 h-2 bg-liveRed rounded-full animate-pulse-live"></span> Join Network
+                </a>
+            </div>
+
+            <div class="xl:hidden ham-trigger" id="ham-trigger">
+                <span class="ham-line line-1"></span>
+                <span class="ham-line line-2"></span>
+                <span class="ham-line line-3"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-30 flex flex-col justify-between pt-36 px-8 pb-12 overflow-hidden">
+        <div class="menu-backdrop"></div>
+        
+        <div class="relative z-10 flex flex-col space-y-8 mt-10 max-w-2xl mx-auto w-full">
+            <div class="menu-link-wrapper" style="transition-delay: 0.1s;">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-widest block mb-2 border-b border-studioBorder pb-2">01</span>
+                <a href="#manifesto" class="mobile-link block text-4xl sm:text-6xl font-display font-black text-textBright uppercase tracking-tighter hover:text-liveRed transition-colors">The Paradigm</a>
+            </div>
+            <div class="menu-link-wrapper" style="transition-delay: 0.2s;">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-widest block mb-2 border-b border-studioBorder pb-2">02</span>
+                <a href="#curriculum" class="mobile-link block text-4xl sm:text-6xl font-display font-black text-textBright uppercase tracking-tighter hover:text-liveRed transition-colors">Curriculum</a>
+            </div>
+            <div class="menu-link-wrapper" style="transition-delay: 0.3s;">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-widest block mb-2 border-b border-studioBorder pb-2">03</span>
+                <a href="#schedule" class="mobile-link block text-4xl sm:text-6xl font-display font-black text-textBright uppercase tracking-tighter hover:text-liveRed transition-colors">Schedule</a>
+            </div>
+            <div class="menu-link-wrapper" style="transition-delay: 0.4s;">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-widest block mb-2 border-b border-studioBorder pb-2">04</span>
+                <a href="#pricing" class="mobile-link block text-4xl sm:text-6xl font-display font-black text-textBright uppercase tracking-tighter hover:text-liveRed transition-colors">Enrollment</a>
+            </div>
+            <div class="menu-link-wrapper" style="transition-delay: 0.5s;">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-widest block mb-2 border-b border-studioBorder pb-2">05</span>
+                <a href="#affiliate" class="mobile-link block text-4xl sm:text-6xl font-display font-black text-liveRed uppercase tracking-tighter hover:text-white transition-colors">Partner (20%)</a>
+            </div>
+        </div>
+        
+        <div class="relative z-10 menu-link-wrapper mt-auto pt-12" style="transition-delay: 0.6s;">
+            <div class="bg-studioDark p-8 border-2 border-studioBorder text-center shadow-card-depth">
+                <p class="text-xs font-mono text-textMuted uppercase tracking-widest mb-6">Initialize Real-Time Access</p>
+                <a href="https://whop.com/liveacademy/liveacademy?a=digitalartlab" class="btn-cinematic flex justify-center items-center w-full py-6 bg-studioBlack text-white font-display font-black text-sm uppercase tracking-[0.2em] shadow-red-glow">
+                    Join Live Academy ($197)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <section class="relative pt-48 pb-24 lg:pt-64 lg:pb-40 min-h-screen flex items-center overflow-hidden border-b-2 border-studioBorder">
+        <div class="absolute inset-0 z-0 bg-studioBlack">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiMwMjAyMDIiLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMjIyMjIyIi8+PC9zdmc+')] opacity-60"></div>
+            <div class="absolute inset-0 bg-studio-gradient z-20"></div>
+        </div>
+
+        <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-30 w-full">
+            <div class="grid lg:grid-cols-12 gap-16 lg:gap-12 items-center">
+                
+                <div class="lg:col-span-7 animate-slide-up text-center lg:text-left relative z-20">
+                    
+                    <div class="inline-flex items-center gap-3 px-5 py-2 border border-studioBorder bg-studioDark/90 backdrop-blur-xl mb-10 shadow-lg">
+                        <span class="w-2.5 h-2.5 bg-liveRed rounded-full animate-pulse-live shadow-[0_0_12px_#FF1E1E]"></span>
+                        <span class="font-mono text-[11px] text-textBright uppercase tracking-[0.3em] font-bold">Live Broadcasting Worldwide</span>
+                    </div>
+                    
+                    <h1 class="text-6xl sm:text-7xl lg:text-[6.5rem] font-display font-black text-textBright leading-[0.95] mb-8 tracking-tighter uppercase">
+                        Pre-Recorded <br> Courses Are <br> <span class="text-transparent bg-clip-text bg-gradient-to-b from-liveRed to-liveRedDark">Dead.</span>
+                    </h1>
+                    
+                    <p class="text-xl sm:text-2xl text-textMuted mb-12 max-w-2xl mx-auto lg:mx-0 font-body leading-relaxed border-l-4 border-liveRed pl-6">
+                        You cannot build a 7-figure agency by watching an outdated 50-hour video module. The Top 1% execute with real-time feedback. Stop consuming. Start operating <strong class="text-white font-bold tracking-wide">LIVE.</strong>
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 mb-16">
+                        <a href="https://whop.com/liveacademy/liveacademy?a=digitalartlab" class="btn-cinematic w-full sm:w-auto px-12 py-6 bg-studioDark text-textBright font-display font-black text-sm uppercase tracking-[0.2em] flex items-center justify-center gap-4 shadow-red-glow hover:shadow-red-glow-intense">
+                            <span class="w-2.5 h-2.5 bg-white rounded-full animate-pulse"></span>
+                            Access Live Network
+                        </a>
+                        <a href="#curriculum" class="w-full sm:w-auto px-12 py-6 bg-transparent text-textBright font-display font-bold text-sm uppercase tracking-[0.2em] border-2 border-studioBorder hover:bg-white hover:text-studioBlack transition-colors duration-300 flex items-center justify-center">
+                            View Syllabus
+                        </a>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-10 border-t border-studioBorder/70">
+                        <div>
+                            <div class="font-display text-3xl font-black text-textBright mb-1">5x</div>
+                            <div class="font-mono text-[10px] text-textMuted uppercase tracking-widest font-bold">Days A Week Live</div>
+                        </div>
+                        <div>
+                            <div class="font-display text-3xl font-black text-textBright mb-1">B2B</div>
+                            <div class="font-mono text-[10px] text-textMuted uppercase tracking-widest font-bold">Client Acquisition</div>
+                        </div>
+                        <div>
+                            <div class="font-display text-3xl font-black text-textBright mb-1">$197</div>
+                            <div class="font-mono text-[10px] text-textMuted uppercase tracking-widest font-bold">Cancel Anytime</div>
+                        </div>
+                        <div>
+                            <div class="font-display text-3xl font-black text-liveRed mb-1">20%</div>
+                            <div class="font-mono text-[10px] text-liveRed uppercase tracking-widest font-bold">Partner Split</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative hidden lg:block animate-fade-in" style="animation-delay: 0.3s;">
+                    <div class="bg-[#050505] border-2 border-studioBorder p-3 shadow-[0_20px_60px_-10px_rgba(250,17,17,0.15)] relative rounded-lg">
+                        
+                        <div class="flex justify-between items-center px-5 py-4 bg-[#0A0A0A] border-b-2 border-studioBorder rounded-t">
+                            <div class="flex items-center gap-4">
+                                <span class="w-2.5 h-2.5 bg-liveRed rounded-full animate-pulse-live shadow-[0_0_10px_#FF1E1E]"></span>
+                                <span class="font-mono text-[11px] text-textBright uppercase tracking-widest font-bold">CH_01: Main Audio Matrix</span>
+                            </div>
+                            <div class="font-mono text-[11px] text-textMuted font-bold bg-studioGray px-2 py-1 rounded">VWR: 1,420</div>
+                        </div>
+                        
+                        <div class="relative aspect-[4/3] bg-[#020202] border-b-2 border-studioBorder overflow-hidden flex flex-col justify-between" style="background-image: linear-gradient(#121212 1px, transparent 1px), linear-gradient(90deg, #121212 1px, transparent 1px); background-size: 20px 20px;">
+                            
+                            <div class="absolute top-0 left-0 w-full h-1 bg-liveRed/50 shadow-[0_0_20px_#FF1E1E] animate-scanline z-0"></div>
+
+                            <div class="p-4 flex justify-between items-start z-10">
+                                <div class="bg-liveRed text-white font-mono text-[10px] font-bold px-3 py-1.5 uppercase flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span> REC
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-mono text-[10px] text-green-500 mb-1">SECURE CONNECTION</div>
+                                    <div class="font-mono text-[9px] text-textMuted">LATENCY: 12ms</div>
+                                </div>
+                            </div>
+
+                            <div class="absolute inset-0 p-6 pt-20 pointer-events-none z-0 overflow-hidden flex flex-col justify-end pb-32">
+                                <div class="font-mono text-[9px] text-green-500/40 space-y-1 opacity-70" id="matrix-stream">
+                                    <div>> System initialized...</div>
+                                    <div>> Capturing audio input from host...</div>
+                                    <div>> Analyzing prospect objection handling...</div>
+                                    <div>> Frame control metric: 89%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="relative z-10 w-full h-32 px-6 flex items-end justify-center gap-1.5 mb-6" id="audio-visualizer">
+                                </div>
+                            
+                            <div class="p-4 bg-gradient-to-t from-black to-transparent z-10 flex justify-between items-end">
+                                <div class="bg-black/90 backdrop-blur text-white font-mono text-xs px-4 py-2 border border-white/20 uppercase tracking-wider font-bold">
+                                    Live Call: Sales Breakdown
+                                </div>
+                                <div class="w-10 h-10 rounded-full border-2 border-white/30 flex items-center justify-center bg-black/50">
+                                    <div class="w-3 h-3 bg-liveRed rounded-sm"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="h-20 bg-[#0A0A0A] px-5 flex items-center justify-between rounded-b">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded bg-studioGray border border-studioBorder flex items-center justify-center text-white">🎤</div>
+                                <div class="w-10 h-10 rounded bg-studioGray border border-studioBorder flex items-center justify-center text-white">📹</div>
+                                <div class="w-10 h-10 rounded bg-studioGray border border-studioBorder flex items-center justify-center text-white">💻</div>
+                            </div>
+                            <div class="font-mono text-[10px] text-liveRed font-bold bg-liveRed/10 px-3 py-1.5 border border-liveRed/30 rounded">
+                                END BROADCAST
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -top-6 -left-6 w-12 h-12 border-t-4 border-l-4 border-liveRed/40"></div>
+                    <div class="absolute -bottom-6 -right-6 w-12 h-12 border-b-4 border-r-4 border-liveRed/40"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="manifesto" class="py-32 lg:py-48 bg-studioBlack relative border-b border-studioBorder overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-studioGray/20 to-transparent pointer-events-none z-0"></div>
+
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-20 items-start">
+                
+                <div class="lg:col-span-7 reveal-node">
+                    <span class="font-mono text-[10px] text-liveRed uppercase tracking-[0.3em] font-bold mb-8 block">01 // The Problem</span>
+                    <h2 class="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-textBright leading-[1.05] uppercase mb-10">
+                        The Course <br> Graveyard.
+                    </h2>
+                    
+                    <div class="prose prose-invert prose-lg md:prose-xl font-body text-textMuted leading-relaxed max-w-none">
+                        <p class="mb-8">The e-learning industry is fundamentally broken. You pay $2,000 for a static, pre-recorded course that was filmed 18 months ago. By the time you watch it, the market has changed, ad platforms have updated their algorithms, and the exact sales scripts they teach have become saturated.</p>
+                        
+                        <p class="mb-8">You are left executing outdated strategies in complete isolation, wondering why your cold emails are going to spam and why prospects are hanging up on you.</p>
+                        
+                        <div class="border-l-4 border-liveRed pl-6 py-2 bg-liveRed/5 my-12">
+                            <p class="font-display font-bold text-2xl text-white m-0 uppercase tracking-wide">
+                                Information is no longer a commodity you should pay high-ticket prices for. Execution and proximity are.
+                            </p>
+                        </div>
+
+                        <p>At Live Academy*, we burned the pre-recorded model. We operate exclusively as a live mastermind. If you want to master B2B client acquisition, high-ticket sales, and agency scaling, you do it shoulder-to-shoulder with active, 7-figure operators who are in the trenches today.</p>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-5 grid grid-cols-1 gap-8 reveal-node delay-200">
+                    <div class="studio-card p-10">
+                        <h4 class="font-display font-black text-2xl text-white uppercase mb-4 border-b border-studioBorder pb-4">The Old Way</h4>
+                        <ul class="space-y-5 font-mono text-sm text-textMuted mt-6">
+                            <li class="flex items-start gap-4"><span class="text-liveRed mt-0.5 text-lg">✕</span> Watching outdated video modules</li>
+                            <li class="flex items-start gap-4"><span class="text-liveRed mt-0.5 text-lg">✕</span> Zero personal feedback or coaching</li>
+                            <li class="flex items-start gap-4"><span class="text-liveRed mt-0.5 text-lg">✕</span> Asking questions in dead FB groups</li>
+                            <li class="flex items-start gap-4"><span class="text-liveRed mt-0.5 text-lg">✕</span> Paying $2,500+ upfront</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="studio-card p-10 border-liveRed/50 relative overflow-hidden shadow-red-glow">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-liveRed/10 blur-[50px]"></div>
+                        <h4 class="font-display font-black text-2xl text-white uppercase mb-4 border-b border-studioBorder pb-4 relative z-10">Live Academy*</h4>
+                        <ul class="space-y-5 font-mono text-sm text-white mt-6 relative z-10">
+                            <li class="flex items-start gap-4"><span class="text-green-500 mt-0.5 text-lg">✓</span> 5 Days a week Live Zoom calls</li>
+                            <li class="flex items-start gap-4"><span class="text-green-500 mt-0.5 text-lg">✓</span> Hot-seat business & offer teardowns</li>
+                            <li class="flex items-start gap-4"><span class="text-green-500 mt-0.5 text-lg">✓</span> Active Discord War Room community</li>
+                            <li class="flex items-start gap-4"><span class="text-green-500 mt-0.5 text-lg">✓</span> $197/mo. Cancel anytime.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="curriculum" class="py-32 lg:py-48 bg-[#040404] relative border-b border-studioBorder">
+        <div class="absolute inset-0 opacity-30" style="background-image: linear-gradient(#121212 1px, transparent 1px), linear-gradient(90deg, #121212 1px, transparent 1px); background-size: 60px 60px;"></div>
+
+        <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-24 reveal-node">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-[0.3em] font-bold mb-6 block">02 // The Syllabus</span>
+                <h2 class="font-display text-5xl md:text-6xl lg:text-7xl font-black text-textBright uppercase mb-8 tracking-tight">The Architecture of Scale.</h2>
+                <p class="font-body text-textMuted max-w-3xl mx-auto text-lg leading-relaxed">What exactly do we teach live? We focus entirely on B2B client acquisition, high-ticket sales, and building highly profitable productized services (like specialized web dev, growth partner, or AI agencies).</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="studio-card p-12 reveal-node group hover:bg-[#080808]">
+                    <div class="font-display font-black text-7xl text-studioBorder mb-8 group-hover:text-liveRed/30 transition-colors">I</div>
+                    <h3 class="font-display font-black text-3xl text-white uppercase mb-5">Offer Creation</h3>
+                    <div class="w-12 h-1 bg-liveRed mb-6"></div>
+                    <p class="font-body text-base text-textMuted leading-relaxed mb-10">
+                        You can't scale a generalized, low-ticket service. We work with you live to craft an irresistible, high-ticket "Grand Slam" offer targeting a specific, wealthy niche.
+                    </p>
+                    <ul class="space-y-4 font-mono text-xs text-textMuted">
+                        <li class="border-b border-studioBorder pb-3">> Niche selection matrix</li>
+                        <li class="border-b border-studioBorder pb-3">> Pricing psychology ($2k+ MRR)</li>
+                        <li class="pb-2">> Guarantee structuring & derisking</li>
+                    </ul>
+                </div>
+
+                <div class="studio-card p-12 reveal-node delay-100 group hover:bg-[#080808]">
+                    <div class="font-display font-black text-7xl text-studioBorder mb-8 group-hover:text-liveRed/30 transition-colors">II</div>
+                    <h3 class="font-display font-black text-3xl text-white uppercase mb-5">Lead Gen Engines</h3>
+                    <div class="w-12 h-1 bg-liveRed mb-6"></div>
+                    <p class="font-body text-base text-textMuted leading-relaxed mb-10">
+                        The exact architecture for booking 15-20 qualified B2B appointments per week. We review your cold email sequences and content strategy live on screen.
+                    </p>
+                    <ul class="space-y-4 font-mono text-xs text-textMuted">
+                        <li class="border-b border-studioBorder pb-3">> Cold email domain infrastructure</li>
+                        <li class="border-b border-studioBorder pb-3">> LinkedIn/X content flywheels</li>
+                        <li class="pb-2">> Direct response appointment scripts</li>
+                    </ul>
+                </div>
+
+                <div class="studio-card p-12 reveal-node delay-200 group hover:bg-[#080808]">
+                    <div class="font-display font-black text-7xl text-studioBorder mb-8 group-hover:text-liveRed/30 transition-colors">III</div>
+                    <h3 class="font-display font-black text-3xl text-white uppercase mb-5">Live Closing</h3>
+                    <div class="w-12 h-1 bg-liveRed mb-6"></div>
+                    <p class="font-body text-base text-textMuted leading-relaxed mb-10">
+                        Sales is a contact sport. We listen to your recorded sales calls, dissect your frame control, and provide direct feedback on how to handle brutal objections.
+                    </p>
+                    <ul class="space-y-4 font-mono text-xs text-textMuted">
+                        <li class="border-b border-studioBorder pb-3">> The 1-call close framework</li>
+                        <li class="border-b border-studioBorder pb-3">> Handling "I need to think about it"</li>
+                        <li class="pb-2">> Collecting cash directly on the call</li>
+                    </ul>
+                </div>
+
+                <div class="studio-card p-12 reveal-node group hover:bg-[#080808]">
+                    <div class="font-display font-black text-7xl text-studioBorder mb-8 group-hover:text-liveRed/30 transition-colors">IV</div>
+                    <h3 class="font-display font-black text-3xl text-white uppercase mb-5">Productization</h3>
+                    <div class="w-12 h-1 bg-liveRed mb-6"></div>
+                    <p class="font-body text-base text-textMuted leading-relaxed mb-10">
+                        Transition from an exhausted freelancer to a true agency owner. We teach you how to systematize fulfillment so you can handle 20+ clients easily.
+                    </p>
+                    <ul class="space-y-4 font-mono text-xs text-textMuted">
+                        <li class="border-b border-studioBorder pb-3">> Asynchronous Slack communication</li>
+                        <li class="border-b border-studioBorder pb-3">> Standard Operating Procedures (SOPs)</li>
+                        <li class="pb-2">> Hiring and delegating to contractors</li>
+                    </ul>
+                </div>
+
+                <div class="studio-card p-12 reveal-node delay-100 group hover:bg-[#080808]">
+                    <div class="font-display font-black text-7xl text-studioBorder mb-8 group-hover:text-liveRed/30 transition-colors">V</div>
+                    <h3 class="font-display font-black text-3xl text-white uppercase mb-5">AI Infrastructure</h3>
+                    <div class="w-12 h-1 bg-liveRed mb-6"></div>
+                    <p class="font-body text-base text-textMuted leading-relaxed mb-10">
+                        Stay ahead of the curve. Learn how to implement custom AI agents, automate your client onboarding, and build AI-powered solutions to sell to B2B clients.
+                    </p>
+                    <ul class="space-y-4 font-mono text-xs text-textMuted">
+                        <li class="border-b border-studioBorder pb-3">> Prompt engineering for operations</li>
+                        <li class="border-b border-studioBorder pb-3">> Building AI automations (Make/Zapier)</li>
+                        <li class="pb-2">> Selling AI software as a Service</li>
+                    </ul>
+                </div>
+
+                <div class="studio-card p-12 reveal-node delay-200 bg-studioGray/50 flex flex-col justify-center items-center text-center relative overflow-hidden border-liveRed/30">
+                    <div class="absolute inset-0 bg-red-flare opacity-70"></div>
+                    <div class="relative z-10 w-full">
+                        <h3 class="font-display font-black text-4xl text-white uppercase mb-6 leading-tight">Stop Consuming.<br>Start Executing.</h3>
+                        <p class="font-mono text-xs text-textBright bg-liveRed/20 py-2 px-4 rounded border border-liveRed/50 uppercase tracking-widest mb-10 inline-block">All modules taught 100% Live</p>
+                        <a href="#pricing" class="btn-cinematic block w-full py-5 bg-studioBlack text-white font-display font-black text-sm uppercase tracking-[0.2em] shadow-lg">
+                            Enroll in Live Academy
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="schedule" class="py-32 lg:py-48 bg-studioBlack relative border-b border-studioBorder overflow-hidden">
+        <div class="absolute top-1/2 left-0 w-[800px] h-[800px] bg-liveRed/5 rounded-full blur-[200px] pointer-events-none -translate-y-1/2"></div>
+
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-24 reveal-node">
+                <div>
+                    <span class="font-mono text-[10px] text-liveRed uppercase tracking-[0.3em] font-bold mb-6 block">03 // Operations</span>
+                    <h2 class="font-display text-5xl md:text-6xl font-black text-textBright uppercase tracking-tight">The Broadcast Schedule.</h2>
+                </div>
+                <div class="mt-8 md:mt-0 px-5 py-3 border border-studioBorder bg-[#080808] font-mono text-[11px] text-textMuted uppercase tracking-widest shadow-sm">
+                    Operating Timezone: EST (New York)
+                </div>
+            </div>
+
+            <div class="space-y-6 reveal-node delay-100">
+                
+                <div class="studio-card p-8 sm:p-10 flex flex-col md:flex-row gap-8 md:items-center hover:border-liveRed/60 transition-colors">
+                    <div class="w-full md:w-56 shrink-0">
+                        <h4 class="font-display font-black text-3xl text-white uppercase mb-1">Monday</h4>
+                        <span class="font-mono text-xs text-liveRed uppercase tracking-widest font-bold">12:00 PM EST</span>
+                    </div>
+                    <div class="w-px h-20 bg-studioBorder hidden md:block"></div>
+                    <div class="flex-grow">
+                        <h5 class="font-display font-bold text-2xl text-white mb-3">Offer & Copy Teardowns</h5>
+                        <p class="font-body text-base text-textMuted leading-relaxed">Submit your landing pages, VSLs, and cold email scripts. We go through them live on screen, ripping apart bad copy and rewriting it into high-converting, irresistible assets on the spot.</p>
+                    </div>
+                    <div class="shrink-0 hidden lg:block">
+                        <span class="px-4 py-2 bg-studioGray border border-studioBorder text-textBright font-mono text-[10px] uppercase tracking-widest">Live Zoom Call</span>
+                    </div>
+                </div>
+
+                <div class="studio-card p-8 sm:p-10 flex flex-col md:flex-row gap-8 md:items-center hover:border-liveRed/60 transition-colors">
+                    <div class="w-full md:w-56 shrink-0">
+                        <h4 class="font-display font-black text-3xl text-white uppercase mb-1">Tuesday</h4>
+                        <span class="font-mono text-xs text-liveRed uppercase tracking-widest font-bold">02:00 PM EST</span>
+                    </div>
+                    <div class="w-px h-20 bg-studioBorder hidden md:block"></div>
+                    <div class="flex-grow">
+                        <h5 class="font-display font-bold text-2xl text-white mb-3">Live Prospecting & Outreach</h5>
+                        <p class="font-body text-base text-textMuted leading-relaxed">Watch directly over our shoulder as we build targeted lead lists, scrape B2B data, and set up automated outbound email campaigns using modern infrastructure and AI personalization.</p>
+                    </div>
+                    <div class="shrink-0 hidden lg:block">
+                        <span class="px-4 py-2 bg-studioGray border border-studioBorder text-textBright font-mono text-[10px] uppercase tracking-widest">Screen Share</span>
+                    </div>
+                </div>
+
+                <div class="studio-card p-8 sm:p-10 flex flex-col md:flex-row gap-8 md:items-center hover:border-liveRed/60 transition-colors border-l-4 border-l-liveRed bg-studioGray/30">
+                    <div class="w-full md:w-56 shrink-0">
+                        <h4 class="font-display font-black text-3xl text-white uppercase mb-1">Wednesday</h4>
+                        <span class="font-mono text-xs text-liveRed uppercase tracking-widest font-bold">01:00 PM EST</span>
+                    </div>
+                    <div class="w-px h-20 bg-studioBorder hidden md:block"></div>
+                    <div class="flex-grow">
+                        <h5 class="font-display font-bold text-2xl text-white mb-3">Sales Call Analysis (The War Room)</h5>
+                        <p class="font-body text-base text-textBright leading-relaxed">The most valuable call of the week. Bring recordings of your failed sales calls. We analyze the tape, pause at critical moments, and correct your tonality, frame control, and objection handling.</p>
+                    </div>
+                    <div class="shrink-0 hidden lg:block">
+                        <span class="px-4 py-2 bg-liveRed text-white border border-liveRed font-mono text-[10px] uppercase tracking-widest font-bold shadow-red-glow">Hot Seat Focus</span>
+                    </div>
+                </div>
+
+                <div class="studio-card p-8 sm:p-10 flex flex-col md:flex-row gap-8 md:items-center hover:border-liveRed/60 transition-colors">
+                    <div class="w-full md:w-56 shrink-0">
+                        <h4 class="font-display font-black text-3xl text-white uppercase mb-1">Thursday</h4>
+                        <span class="font-mono text-xs text-liveRed uppercase tracking-widest font-bold">03:00 PM EST</span>
+                    </div>
+                    <div class="w-px h-20 bg-studioBorder hidden md:block"></div>
+                    <div class="flex-grow">
+                        <h5 class="font-display font-bold text-2xl text-white mb-3">Systems, Scale & Fulfillment</h5>
+                        <p class="font-body text-base text-textMuted leading-relaxed">Focusing purely on operations. How to hire media buyers, structure Slack/Notion for client onboarding, and build a productized service that doesn't consume 80 hours of your week.</p>
+                    </div>
+                    <div class="shrink-0 hidden lg:block">
+                        <span class="px-4 py-2 bg-studioGray border border-studioBorder text-textBright font-mono text-[10px] uppercase tracking-widest">Live Zoom Call</span>
+                    </div>
+                </div>
+
+                <div class="studio-card p-8 sm:p-10 flex flex-col md:flex-row gap-8 md:items-center hover:border-liveRed/60 transition-colors">
+                    <div class="w-full md:w-56 shrink-0">
+                        <h4 class="font-display font-black text-3xl text-white uppercase mb-1">Friday</h4>
+                        <span class="font-mono text-xs text-liveRed uppercase tracking-widest font-bold">11:00 AM EST</span>
+                    </div>
+                    <div class="w-px h-20 bg-studioBorder hidden md:block"></div>
+                    <div class="flex-grow">
+                        <h5 class="font-display font-bold text-2xl text-white mb-3">Wins, Losses & Open Q&A</h5>
+                        <p class="font-body text-base text-textMuted leading-relaxed">End of week debrief. Share your closed deals, discuss bottlenecks, and get direct, unscripted answers from 7-figure founders to plan your next week's attack vector.</p>
+                    </div>
+                    <div class="shrink-0 hidden lg:block">
+                        <span class="px-4 py-2 bg-studioGray border border-studioBorder text-textBright font-mono text-[10px] uppercase tracking-widest">Community Q&A</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="proof" class="py-32 lg:py-48 bg-[#030303] relative border-b border-studioBorder">
+        <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-24 reveal-node">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-[0.3em] font-bold mb-6 block">04 // The Proof</span>
+                <h2 class="font-display text-5xl md:text-6xl lg:text-7xl font-black text-textBright uppercase mb-6 tracking-tight">Receipts.</h2>
+                <p class="font-body text-textMuted max-w-2xl mx-auto text-lg">We don't sell dreams; we engineer results. Read direct feedback from operators inside the network.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="studio-card p-10 reveal-node hover:border-liveRed/30">
+                    <div class="flex items-center gap-5 mb-8">
+                        <div class="w-14 h-14 bg-studioGray rounded-full flex items-center justify-center font-display font-black text-2xl border border-studioBorder text-white">M</div>
+                        <div>
+                            <div class="font-display font-bold text-white text-lg uppercase">Michael T.</div>
+                            <div class="font-mono text-[10px] text-textMuted uppercase tracking-widest mt-1">Web Dev Agency</div>
+                        </div>
+                    </div>
+                    <p class="font-body text-base text-textMuted leading-relaxed mb-8">"I was stuck selling $500 websites to local businesses. Joined Live Academy, got my offer ripped apart on a Monday call. Repackaged as a 'Client Acquisition Funnel' for fitness coaches. Closed a $3,500 retainer that Friday. The live sales call breakdowns are an absolute cheat code."</p>
+                    <div class="border-t border-studioBorder pt-5">
+                        <span class="font-mono text-xs text-green-500 uppercase tracking-widest font-bold">Result: +$3,500 MRR</span>
+                    </div>
+                </div>
+
+                <div class="studio-card p-10 reveal-node delay-100 hover:border-liveRed/30">
+                    <div class="flex items-center gap-5 mb-8">
+                        <div class="w-14 h-14 bg-studioGray rounded-full flex items-center justify-center font-display font-black text-2xl border border-studioBorder text-white">S</div>
+                        <div>
+                            <div class="font-display font-bold text-white text-lg uppercase">Sarah K.</div>
+                            <div class="font-mono text-[10px] text-textMuted uppercase tracking-widest mt-1">AI Ops Consultant</div>
+                        </div>
+                    </div>
+                    <p class="font-body text-base text-textMuted leading-relaxed mb-8">"The 20% affiliate program alone pays for my membership and then some. But the real value is the Thursday ops calls. Learned how to build custom GPTs for logistics companies. Landed my first enterprise client for $8k using the exact outbound script provided in the Discord war room."</p>
+                    <div class="border-t border-studioBorder pt-5">
+                        <span class="font-mono text-xs text-green-500 uppercase tracking-widest font-bold">Result: $8k Enterprise Close</span>
+                    </div>
+                </div>
+
+                <div class="studio-card p-10 reveal-node delay-200 hover:border-liveRed/30">
+                    <div class="flex items-center gap-5 mb-8">
+                        <div class="w-14 h-14 bg-studioGray rounded-full flex items-center justify-center font-display font-black text-2xl border border-studioBorder text-white">D</div>
+                        <div>
+                            <div class="font-display font-bold text-white text-lg uppercase">David R.</div>
+                            <div class="font-mono text-[10px] text-textMuted uppercase tracking-widest mt-1">B2B Lead Gen</div>
+                        </div>
+                    </div>
+                    <p class="font-body text-base text-textMuted leading-relaxed mb-8">"Pre-recorded courses gave me the 'what', but Live Academy gave me the 'how' in real-time. Hearing a 7-figure founder pause my recorded sales call and point out exactly where I lost frame control changed everything. My close rate went from a terrible 15% to 40% in one month."</p>
+                    <div class="border-t border-studioBorder pt-5">
+                        <span class="font-mono text-xs text-green-500 uppercase tracking-widest font-bold">Result: 40% Close Rate</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-20 text-center">
+                <div class="inline-block px-8 py-4 border border-studioBorder bg-studioDark font-mono text-[10px] text-textMuted uppercase tracking-widest">
+                    All reviews verified by Whop.com Secure Platform
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-32 lg:py-48 bg-studioBlack relative overflow-hidden border-b border-studioBorder">
+        <div class="absolute inset-0 bg-red-flare opacity-50 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiMwMjAyMDIiLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMjIyMjIyIi8+PC9zdmc+')] opacity-40 z-0"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20 reveal-node">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-[0.3em] font-bold mb-6 block">05 // Enrollment</span>
+                <h2 class="font-display text-5xl md:text-7xl lg:text-[5rem] font-black text-white uppercase tracking-tighter mb-8">Step Into <br>The Studio.</h2>
+                <p class="font-body text-xl text-textMuted max-w-3xl mx-auto">Stop paying $5,000 for outdated mastermind recordings. Get daily live access, real-time coaching, and an elite network for less than the cost of a weekend dinner.</p>
+            </div>
+
+            <div class="studio-card p-1 sm:p-2 max-w-4xl mx-auto reveal-node delay-100 relative shadow-red-glow-intense">
+                <div class="absolute -inset-1 bg-gradient-to-r from-liveRed via-studioDark to-liveRed blur opacity-30 pointer-events-none"></div>
+                
+                <div class="bg-[#050505] p-10 md:p-16 relative z-10 border border-studioBorder flex flex-col items-center text-center">
+                    
+                    <div class="absolute top-0 right-0 bg-liveRed text-white font-display font-bold text-[10px] sm:text-xs uppercase px-6 py-2 tracking-widest shadow-lg">
+                        Full Live Access
+                    </div>
+
+                    <h3 class="font-display font-black text-4xl sm:text-5xl text-white uppercase mb-3">Live Academy<span class="text-liveRed">*</span></h3>
+                    <p class="font-mono text-sm text-textMuted uppercase tracking-widest mb-12">Official Membership Tier</p>
+                    
+                    <div class="flex items-baseline justify-center gap-3 mb-4">
+                        <span class="font-display font-black text-7xl sm:text-8xl text-white tracking-tighter">$197</span>
+                        <span class="font-mono text-xl text-textMuted font-bold">.00</span>
+                    </div>
+                    <div class="font-mono text-xs text-textMuted uppercase tracking-widest mb-14 bg-studioGray px-4 py-2 rounded border border-studioBorder inline-block">Billed Monthly via Whop</div>
+                    
+                    <div class="w-full max-w-2xl mx-auto text-left mb-14">
+                        <h4 class="font-mono text-[11px] text-textMuted uppercase tracking-widest mb-6 border-b border-studioBorder pb-3 text-center">Transmission Inclusions:</h4>
+                        <div class="grid sm:grid-cols-2 gap-y-5 gap-x-8 font-mono text-sm text-textBright">
+                            <div class="flex items-center gap-4">
+                                <span class="w-2 h-2 bg-liveRed rounded-full shadow-[0_0_8px_#FF1E1E]"></span>
+                                5x Weekly Live Zoom Coaching
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="w-2 h-2 bg-liveRed rounded-full shadow-[0_0_8px_#FF1E1E]"></span>
+                                Hot-Seat Business Teardowns
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="w-2 h-2 bg-liveRed rounded-full shadow-[0_0_8px_#FF1E1E]"></span>
+                                Live Sales Call Analysis
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="w-2 h-2 bg-liveRed rounded-full shadow-[0_0_8px_#FF1E1E]"></span>
+                                Private Discord "War Room"
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="w-2 h-2 bg-liveRed rounded-full shadow-[0_0_8px_#FF1E1E]"></span>
+                                All Offer & Outreach Scripts
+                            </div>
+                            <div class="flex items-center gap-4 p-3 bg-green-500/10 border border-green-500/30 rounded">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                <span class="text-green-500 font-bold">20.00% Partner Commission Access</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://whop.com/liveacademy/liveacademy?a=digitalartlab" class="btn-cinematic block w-full max-w-xl mx-auto py-6 bg-white text-studioBlack text-center font-display font-black text-sm sm:text-base uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                        Initialize Enrollment
+                    </a>
+                    
+                </div>
+            </div>
+
+            <div class="mt-12 flex justify-center items-center gap-8 font-mono text-[10px] text-textMuted uppercase tracking-widest font-bold">
+                <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Secure Checkout</span>
+                <span>|</span>
+                <span>Cancel Anytime</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="affiliate" class="py-32 lg:py-48 bg-[#050505] border-b border-studioBorder relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-studioGray/40 to-transparent pointer-events-none"></div>
+
+        <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-20 items-center">
+                
+                <div class="lg:col-span-5 reveal-node">
+                    <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-liveRed/10 border border-liveRed/30 text-liveRed font-mono text-[10px] uppercase tracking-[0.2em] font-bold mb-8">06 // Partner Network</span>
+                    
+                    <h2 class="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.05] uppercase tracking-tighter mb-10">
+                        Fund Your <br> <span class="text-textMuted">Growth.</span>
+                    </h2>
+                    
+                    <p class="font-body text-xl text-textMuted leading-relaxed mb-12">
+                        The smartest operators treat education as a self-funding asset. By utilizing the Live Academy partner program, you earn a massive <strong class="text-white">20.00% recurring commission</strong> on every member you refer to the network. 
+                    </p>
+                    
+                    <ul class="space-y-8 mb-14 border-l-2 border-studioBorder pl-8">
+                        <li>
+                            <h4 class="font-display font-black text-white text-xl uppercase mb-2">Scale Your Ad Spend</h4>
+                            <p class="font-body text-base text-textMuted">Use the monthly payouts from Whop to directly fund your agency's cold email infrastructure, software stacks, or paid ads.</p>
+                        </li>
+                        <li>
+                            <h4 class="font-display font-black text-white text-xl uppercase mb-2">5 Referrals = Free Access</h4>
+                            <p class="font-body text-base text-textMuted">Refer exactly 5 people, and your own $197/mo membership becomes mathematically free. Everything beyond that is pure, automated ROI.</p>
+                        </li>
+                    </ul>
+                    
+                    <a href="https://whop.com/liveacademy?a=digitalartlab" class="btn-cinematic inline-flex px-10 py-5 bg-studioDark text-white font-display font-black text-xs uppercase tracking-[0.2em] border border-studioBorder">
+                        Generate Whop Link
+                    </a>
+                </div>
+
+                <div class="lg:col-span-7 relative reveal-node delay-200 hidden md:block">
+                    <div class="studio-card p-12 relative overflow-hidden shadow-card-depth">
+                        <div class="absolute inset-0 bg-noise-texture opacity-30"></div>
+                        
+                        <div class="flex justify-between items-end border-b border-studioBorder pb-8 mb-10 relative z-10">
+                            <div>
+                                <p class="font-mono text-[11px] text-textMuted uppercase tracking-widest mb-3">Partner Ledger Interface</p>
+                                <h3 class="font-display font-black text-4xl text-white">Live Academy*</h3>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-mono text-[11px] text-textMuted uppercase tracking-widest mb-3">Commission Rate</p>
+                                <h3 class="font-display font-black text-4xl text-green-500">20.00%</h3>
+                            </div>
+                        </div>
+
+                        <div class="space-y-5 relative z-10">
+                            <div class="bg-studioBlack border border-studioBorder p-8 flex justify-between items-center rounded">
+                                <div>
+                                    <p class="font-mono text-sm text-white uppercase tracking-widest font-bold">Base Price</p>
+                                </div>
+                                <div>
+                                    <p class="font-mono text-lg text-textMuted">$197.00 <span class="text-xs">/ mo</span></p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-studioDark border border-liveRed/50 p-8 flex justify-between items-center shadow-red-glow rounded">
+                                <div>
+                                    <p class="font-mono text-sm text-white uppercase tracking-widest font-bold">Your Monthly Cut</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-display font-black text-3xl text-liveRed">$39.40</p>
+                                    <p class="font-mono text-[10px] text-textMuted uppercase mt-2 font-bold tracking-widest">Per Active User</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-10 pt-8 border-t border-studioBorder relative z-10">
+                            <p class="font-mono text-[10px] text-textMuted uppercase tracking-widest mb-6 text-center font-bold">Revenue Projection Matrix</p>
+                            <div class="grid grid-cols-3 gap-5">
+                                <div class="bg-studioBlack border border-studioBorder p-6 text-center rounded">
+                                    <p class="font-mono text-[10px] text-textMuted uppercase mb-2 font-bold">5 Members</p>
+                                    <p class="font-display font-black text-xl text-white">$197.00<span class="text-xs text-textMuted">/mo</span></p>
+                                </div>
+                                <div class="bg-studioBlack border border-studioBorder p-6 text-center rounded">
+                                    <p class="font-mono text-[10px] text-textMuted uppercase mb-2 font-bold">10 Members</p>
+                                    <p class="font-display font-black text-xl text-white">$394.00<span class="text-xs text-textMuted">/mo</span></p>
+                                </div>
+                                <div class="bg-studioBlack border border-green-500/30 p-6 text-center rounded bg-green-500/5">
+                                    <p class="font-mono text-[10px] text-green-500 uppercase mb-2 font-bold">20 Members</p>
+                                    <p class="font-display font-black text-xl text-green-500">$788.00<span class="text-xs text-green-700">/mo</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 lg:py-48 bg-studioBlack relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 reveal-node">
+                <span class="font-mono text-[10px] text-liveRed uppercase tracking-[0.3em] font-bold mb-6 block">Knowledge Base</span>
+                <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-black text-textBright uppercase mb-6 tracking-tight">System Inquiries.</h2>
+                <div class="w-16 h-1 bg-liveRed mx-auto"></div>
+            </div>
+
+            <div class="space-y-4 reveal-node delay-100">
+                
+                <div class="faq-block border border-studioBorder bg-[#080808]">
+                    <button class="w-full p-8 text-left flex justify-between items-center focus:outline-none group" onclick="toggleFaq(this)">
+                        <span class="font-display font-black text-white text-xl uppercase tracking-wide group-hover:text-liveRed transition-colors pr-6">What time are the live calls?</span>
+                        <svg class="w-8 h-8 text-studioBorder faq-icon group-hover:text-liveRed shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    </button>
+                    <div class="faq-drawer bg-studioBlack border-t border-studioBorder">
+                        <p class="font-body text-textMuted text-base p-8 leading-relaxed">
+                            We broadcast 5 days a week (Monday to Friday). Calls typically range between 11:00 AM EST and 3:00 PM EST depending on the day's curriculum (Offer Teardowns, Sales Reviews, Operations, etc.). A detailed weekly calendar is pinned inside the Discord War Room.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-block border border-studioBorder bg-[#080808]">
+                    <button class="w-full p-8 text-left flex justify-between items-center focus:outline-none group" onclick="toggleFaq(this)">
+                        <span class="font-display font-black text-white text-xl uppercase tracking-wide group-hover:text-liveRed transition-colors pr-6">What if I miss a live session?</span>
+                        <svg class="w-8 h-8 text-studioBorder faq-icon group-hover:text-liveRed shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    </button>
+                    <div class="faq-drawer bg-studioBlack border-t border-studioBorder">
+                        <p class="font-body text-textMuted text-base p-8 leading-relaxed">
+                            Every single live session is recorded in high-definition studio quality and uploaded to our private vault within 24 hours. However, we highly encourage attendance as the true value of Live Academy* is being in the room to get hot-seat feedback on your specific business bottlenecks.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-block border border-studioBorder bg-[#080808]">
+                    <button class="w-full p-8 text-left flex justify-between items-center focus:outline-none group" onclick="toggleFaq(this)">
+                        <span class="font-display font-black text-white text-xl uppercase tracking-wide group-hover:text-liveRed transition-colors pr-6">Is this for beginners or advanced operators?</span>
+                        <svg class="w-8 h-8 text-studioBorder faq-icon group-hover:text-liveRed shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    </button>
+                    <div class="faq-drawer bg-studioBlack border-t border-studioBorder">
+                        <p class="font-body text-textMuted text-base p-8 leading-relaxed">
+                            Both. If you are a beginner, you skip the massive trial-and-error phase by watching exactly how 7-figure operators structure offers and close deals. If you are advanced and stuck at $10k-$20k/mo, the "Live Closing" and "Operations & Scale" calls will provide the exact micro-adjustments needed to break past your revenue ceiling.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-block border border-studioBorder bg-[#080808]">
+                    <button class="w-full p-8 text-left flex justify-between items-center focus:outline-none group" onclick="toggleFaq(this)">
+                        <span class="font-display font-black text-white text-xl uppercase tracking-wide group-hover:text-liveRed transition-colors pr-6">How do payouts for the 20% Partner Program work?</span>
+                        <svg class="w-8 h-8 text-studioBorder faq-icon group-hover:text-liveRed shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    </button>
+                    <div class="faq-drawer bg-studioBlack border-t border-studioBorder">
+                        <p class="font-body text-textMuted text-base p-8 leading-relaxed">
+                            When you join via Whop, you get instant access to an affiliate dashboard. You generate a custom tracking link. For every person who subscribes to the $197 tier via your link, Whop automatically routes 20% ($39.40) to your connected bank account or crypto wallet every month they remain active.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-block border border-studioBorder bg-[#080808]">
+                    <button class="w-full p-8 text-left flex justify-between items-center focus:outline-none group" onclick="toggleFaq(this)">
+                        <span class="font-display font-black text-white text-xl uppercase tracking-wide group-hover:text-liveRed transition-colors pr-6">Am I locked into a contract? Can I cancel?</span>
+                        <svg class="w-8 h-8 text-studioBorder faq-icon group-hover:text-liveRed shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    </button>
+                    <div class="faq-drawer bg-studioBlack border-t border-studioBorder">
+                        <p class="font-body text-textMuted text-base p-8 leading-relaxed">
+                            No. We operate on a strict month-to-month basis. You manage your subscription entirely through Whop's secure portal, allowing you to cancel with a single click at any time without talking to a support rep. You retain access until your current billing cycle ends.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#020202] pt-32 pb-16 relative overflow-hidden border-t-4 border-liveRed">
+        
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[15vw] text-white/[0.02] font-black uppercase pointer-events-none tracking-tighter w-full text-center whitespace-nowrap z-0">
+            LIVE ACADEMY
+        </div>
+
+        <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 lg:gap-12 mb-24 border-b border-studioBorder pb-20">
+                
+                <div class="lg:col-span-5 pr-0 lg:pr-12">
+                    <a href="#" class="flex items-center gap-4 mb-8">
+                        <div class="relative w-10 h-10 flex items-center justify-center">
+                            <div class="absolute inset-0 border border-liveRed rounded-full scale-125 opacity-30"></div>
+                            <div class="w-5 h-5 bg-liveRed rounded-full shadow-[0_0_20px_#FF1E1E]"></div>
+                        </div>
+                        <span class="font-display font-black text-3xl tracking-tighter text-white uppercase">Live Academy<span class="text-liveRed">*</span></span>
+                    </a>
+                    <p class="font-body text-textMuted text-base font-light leading-relaxed max-w-md mb-8">
+                        The era of consuming pre-recorded, outdated video courses is over. Join the definitive real-time network for mastering B2B client acquisition, high-ticket sales, and productized service scaling.
+                    </p>
+                    <div class="flex items-center gap-5">
+                        <a href="https://whop.com/liveacademy?a=digitalartlab" class="px-6 py-3 border border-studioBorder hover:border-liveRed bg-studioDark font-mono text-[10px] text-white uppercase tracking-widest transition-colors flex items-center gap-3">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            View Whop Profile
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 lg:col-start-7">
+                    <h4 class="font-mono text-[11px] text-liveRed uppercase tracking-[0.3em] font-bold mb-8">Transmission</h4>
+                    <ul class="space-y-5 font-mono text-xs text-textMuted uppercase tracking-widest font-bold">
+                        <li><a href="#manifesto" class="hover:text-white transition-colors">The Paradigm</a></li>
+                        <li><a href="#curriculum" class="hover:text-white transition-colors">Curriculum</a></li>
+                        <li><a href="#schedule" class="hover:text-white transition-colors">Schedule</a></li>
+                        <li><a href="#proof" class="hover:text-white transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <h4 class="font-mono text-[11px] text-liveRed uppercase tracking-[0.3em] font-bold mb-8">Network Nodes</h4>
+                    <ul class="space-y-5 font-mono text-xs text-textMuted uppercase tracking-widest font-bold">
+                        <li><a href="https://whop.com/liveacademy/liveacademy?a=digitalartlab" class="hover:text-white transition-colors flex items-center gap-3 text-white"><span class="w-2 h-2 bg-liveRed rounded-full animate-pulse-live"></span> Secure Enrollment</a></li>
+                        <li><a href="#affiliate" class="hover:text-white transition-colors">Partner Ledger (20%)</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Member Access</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Support Comms</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="font-mono text-[10px] text-textMuted uppercase tracking-[0.2em] font-bold text-center md:text-left">
+                    &copy; 2026 Live Academy Network. All Rights Reserved.
+                </div>
+                
+                <div class="flex gap-8 font-mono text-[10px] text-textMuted uppercase tracking-[0.2em] font-bold">
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Refund Protocol</a>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-center md:text-left text-[10px] text-studioBorder font-body max-w-5xl leading-relaxed uppercase tracking-widest">
+                Disclaimer: Live Academy* provides educational resources, live mentorship, and networking opportunities for entrepreneurs. We do not guarantee financial success, specific income results, or business scaling. Entrepreneurship involves significant risk. The examples, testimonials, and case studies provided are for educational purposes and are not a guarantee of future performance.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Studio Hamburger Menu Logic ---
+        const btn = document.getElementById('ham-trigger');
+        const menu = document.getElementById('mobile-menu');
+        const links = document.querySelectorAll('.mobile-link');
+        const navbar = document.getElementById('navbar');
+
+        function toggleMenu() {
+            btn.classList.toggle('ham-active');
+            if(menu.classList.contains('open')) {
+                menu.classList.remove('open');
+                document.body.style.overflow = '';
+                if(window.scrollY > 50) {
+                    navbar.classList.add('bg-[#020202]/95', 'backdrop-blur-md', 'border-b', 'border-studioBorder');
+                }
+            } else {
+                menu.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                navbar.classList.remove('bg-[#020202]/95', 'backdrop-blur-md', 'border-b', 'border-studioBorder');
+            }
+        }
+
+        btn.addEventListener('click', toggleMenu);
+        links.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // --- Cinematic Navbar Scroll Effect ---
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-[#020202]/95', 'backdrop-blur-md', 'border-b', 'border-studioBorder', 'py-4');
+                navbar.classList.remove('py-6', 'border-transparent');
+            } else {
+                navbar.classList.remove('bg-[#020202]/95', 'backdrop-blur-md', 'border-b', 'border-studioBorder', 'py-4');
+                navbar.classList.add('py-6', 'border-transparent');
+            }
+        });
+
+        // --- Scroll Reveal Intersections ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -100px 0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-active');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-node, .animate-slide-up').forEach((elem) => {
+            observer.observe(elem);
+        });
+
+        // --- Accordion Logic ---
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            
+            // Close other open accordions
+            document.querySelectorAll('.faq-block').forEach(otherItem => {
+                if(otherItem !== item && otherItem.classList.contains('is-open')) {
+                    otherItem.classList.remove('is-open');
+                }
+            });
+
+            // Toggle current
+            item.classList.toggle('is-open');
+        }
+
+        // --- Studio Timecode & Visualizer Simulation ---
+        
+        // 1. Timecode logic
+        function updateTimecode() {
+            const el = document.getElementById('live-timecode');
+            if(!el) return;
+            const now = new Date();
+            const pad = (n) => n.toString().padStart(2, '0');
+            const h = pad(now.getHours());
+            const m = pad(now.getMinutes());
+            const s = pad(now.getSeconds());
+            const ms = pad(Math.floor(now.getMilliseconds() / 10)); // pseudo-frames
+            el.innerHTML = `REC <span class="animate-timecode">[${h}:${m}:${s}:${ms}]</span>`;
+            requestAnimationFrame(updateTimecode);
+        }
+        updateTimecode();
+
+        // 2. Audio Visualizer logic
+        const visualizer = document.getElementById('audio-visualizer');
+        if(visualizer) {
+            // Create 20 bars
+            for(let i=0; i<20; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'audio-bar';
+                bar.style.height = '10%';
+                visualizer.appendChild(bar);
+            }
+            
+            // Animate bars randomly to simulate voice
+            setInterval(() => {
+                const bars = visualizer.children;
+                for(let i=0; i<bars.length; i++) {
+                    // Random height between 10% and 90%
+                    const height = Math.floor(Math.random() * 80) + 10;
+                    bars[i].style.height = `${height}%`;
+                }
+            }, 150); // Update every 150ms
+        }
+
+        // 3. Matrix / Terminal stream logic
+        const streamContainer = document.getElementById('matrix-stream');
+        if(streamContainer) {
+            const messages = [
+                "> Adjusting audio gain...",
+                "> Analyzing frame control...",
+                "> Prospect objection identified: 'Too expensive'",
+                "> Injecting reframe script...",
+                "> Host executing tie-down...",
+                "> Network stability: 99.8%",
+                "> Syncing to recording vault...",
+                "> Analyzing micro-expressions...",
+                "> Sale probability increasing..."
+            ];
+            
+            setInterval(() => {
+                const newMsg = document.createElement('div');
+                newMsg.innerText = messages[Math.floor(Math.random() * messages.length)];
+                streamContainer.appendChild(newMsg);
+                
+                // Keep only last 5 messages to avoid overflow
+                if(streamContainer.children.length > 5) {
+                    streamContainer.removeChild(streamContainer.firstChild);
+                }
+            }, 2000); // Add new line every 2 seconds
+        }
+    </script>
+</body>
+</html>
